@@ -11,11 +11,11 @@ class MyCircularDeque:
         self.dummy_tail = Node # dummy tail node
         self.dummy_head.next = self.dummy_tail
         self.dummy_tail.prev = self.dummy_head
-        self.k = k
+        self.capacity = k
         self.size = 0
         
     def insertFront(self, value: int) -> bool:
-        if self.size == self.k:
+        if self.size == self.capacity:
             return False
         new_node = Node(value)
         first = self.dummy_head.next
@@ -30,7 +30,7 @@ class MyCircularDeque:
         return True
 
     def insertLast(self, value: int) -> bool:
-        if self.size == self.k:
+        if self.size == self.capacity:
             return False
         new_node = Node(value)
         last = self.dummy_tail.prev
@@ -79,11 +79,11 @@ class MyCircularDeque:
         return self.size == 0
 
     def isFull(self) -> bool:
-        return self.size == self.k
+        return self.size == self.capacity
 
 
 # Your MyCircularDeque object will be instantiated and called as such:
-# obj = MyCircularDeque(k)
+# obj = MyCircularDeque(capacity)
 # param_1 = obj.insertFront(value)
 # param_2 = obj.insertLast(value)
 # param_3 = obj.deleteFront()
