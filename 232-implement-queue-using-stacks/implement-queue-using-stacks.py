@@ -1,24 +1,33 @@
 class MyQueue:
 
     def __init__(self):
-        self.stack = []
+        self.in_stack = [] # for write operation(push)
+        self.out_stack = [] # for read operations(pead/pop)
 
     def push(self, x: int) -> None:
-        self.stack.append(x)
+        self.in_stack.append(x)
 
     def pop(self) -> int:
-        val = self.stack[0]
-        for i in range(1,len(self.stack)):
-            self.stack[i-1] = self.stack[i]
-        x = self.stack.pop()
-        return val
+        # if out_stack is empty, transfer the queue in reverse order to out_stack(the queue is read from last of out_stack->front of in_stack)
+        if self.out_stack:
+            return self.out_stack.pop()
+        else:
+            while self.in_stack:
+                val = self.in_stack.pop()
+                self.out_stack.append(val)
+            return self.out_stack.pop()
 
     def peek(self) -> int:
-        return self.stack[0]
+        if self.out_stack:
+            return self.out_stack[-1]
+        else:
+            while self.in_stack:
+                val = self.in_stack.pop()
+                self.out_stack.append(val)
+            return self.out_stack[-1]
 
     def empty(self) -> bool:
-        return len(self.stack) == 0
-
+        return not self.in_stack and not self.out_stack
 
 # Your MyQueue object will be instantiated and called as such:
 # obj = MyQueue()
