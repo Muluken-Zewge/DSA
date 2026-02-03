@@ -1,17 +1,27 @@
 class Solution:
     def isTrionic(self, nums: List[int]) -> bool:
-        status = [] # 1 for increasing, 0 for decreasing
-        stack = [nums[0]]
+        if len(nums) < 4:
+            return False
+        
+        phase = -1  #0 = inc, 1 = dec, 2 = inc
         for i in range(1,len(nums)):
-            if nums[i] > stack[-1]:
-                if not status or status[-1] != 1:
-                    status.append(1)
-                stack.append(nums[i])
-            elif nums[i] < stack[-1]:
-                if not status or status[-1] != 0:
-                    status.append(0)
-                stack.append(nums[i])
-            else:
+            if nums[i] == nums[i-1]:
                 return False
-                
-        return status == [1,0,1]
+            
+            if phase == -1:
+                if nums[i] > nums[i-1]:
+                    phase = 0
+                else:
+                    return False
+
+            elif phase == 0:
+                if nums[i] < nums[i-1]:
+                    phase = 1
+            elif phase == 1:
+                if nums[i] > nums[i-1]:
+                    phase = 2
+            else: # phase = 2
+                if nums[i] < nums[i-1]:
+                    return False
+            
+        return phase == 2
