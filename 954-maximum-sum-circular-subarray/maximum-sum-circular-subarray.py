@@ -1,6 +1,6 @@
 class Solution:
     def maxSubarraySumCircular(self, nums: List[int]) -> int:
-        # (total - global_min) gives the circualr answer and we caomare it with the normal kadane sum
+        # (total - global_min) gives the circualr answer and we compare it with the normal kadane sum
         global_max, global_min = nums[0], nums[0]
         curr_max, curr_min = 0, 0
         total = 0
