@@ -1,7 +1,11 @@
 class Solution:
     def reverseBits(self, n: int) -> int:
-        binary = bin(n)[2:]
-        binary = binary[::-1]
-        while len(binary) < 32:
-            binary += '0'
-        return int(binary,2)
+        bi = ''
+        while n > 0:
+            bi += str(n % 2)
+            n //= 2
+
+        while len(bi) < 32:
+            bi += '0'
+
+        return int(bi,2)
