@@ -5,7 +5,7 @@ class Solution:
 
         while num > 1:
             if num % 2 == 0:
-                num >>= 1
+                num //= 2
             else:
                 num += 1
             count += 1
