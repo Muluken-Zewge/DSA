@@ -1,20 +1,19 @@
 class Solution:
     def findKthBit(self, n: int, k: int) -> str:
-
-        def invert(s):
-            res = ''
-            for c in s:
-                if c == '0':
-                    res += '1'
-                else:
-                    res += '0'
-            return res
-
-        def dfs(n):
-            if n == 1:
-                return "0"
-           
-            return dfs(n-1) + '1' + "".join(reversed(invert(dfs(n-1))))
+        if n == 1:
+            return "0"
         
-        s = dfs(n)
-        return s[k-1]
+        length = (1 << n) - 1
+        mid = (length // 2) + 1
+        
+        if k == mid:
+            return "1"
+        
+        if k < mid:
+            return self.findKthBit(n-1, k)
+        
+        # right half
+        mirror = length - k + 1
+        bit = self.findKthBit(n-1, mirror)
+        
+        return "1" if bit == "0" else "0"
