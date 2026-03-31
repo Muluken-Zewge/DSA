@@ -9,15 +9,15 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
 
         def findPath(root,node):
-            queue = deque([root])
             path = []
-            while queue:
-                pop_node = queue.popleft()
-                path.append(pop_node.val)
-                if node.val < pop_node.val:
-                    queue.append(pop_node.left)
-                elif node.val > pop_node.val:
-                    queue.append(pop_node.right)
+            curr = root
+            
+            while curr:
+                path.append(curr.val)
+                if node.val < curr.val:
+                    curr = curr.left
+                elif node.val > curr.val:
+                    curr = curr.right
                 else:
                     break
             
