@@ -5,12 +5,13 @@ class Solution:
         
         intervals.append(newInterval)
         intervals.sort()
-        ans = []
+        ans = [intervals[0]]
 
-        for start,end in intervals:
-            if not ans or start > ans[-1][1]:
+        for start,end in intervals[1:]:
+            # no overlap -> append
+            if start > ans[-1][1]:
                 ans.append([start,end])
-            else:
+            else: # overlap -> update end if neccessary
                 ans[-1][1] = max(ans[-1][1],end)
         
         return ans
