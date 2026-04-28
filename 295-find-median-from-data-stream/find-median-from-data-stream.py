@@ -1,20 +1,34 @@
+'''we use a min heap to store the right half of the sorted array because we want to get the min value in O(1) and we store the left half with max heap because we want to get the max value in O(1) so that we can find the median in O(1). 
+'''
 class MedianFinder:
 
     def __init__(self):
-        self.arr = []
+        self.min_heap = []
+        self.max_heap = []
 
     def addNum(self, num: int) -> None:
-        self.arr.append(num)
-        self.arr.sort()
+        # add to max_heap by default
+        heappush(self.max_heap, -num)
+
+        # check order after pushing
+        if self.min_heap and -self.max_heap[0] > self.min_heap[0]:
+            heappush(self.min_heap, -heappop(self.max_heap))
+
+        # check length and balance
+        if len(self.max_heap) - len(self.min_heap) > 1:
+            heappush(self.min_heap, -heappop(self.max_heap))
+        elif len(self.min_heap) - len(self.max_heap) > 1:
+            heappush(self.max_heap, -heappop(self.min_heap))
+        
 
     def findMedian(self) -> float:
-        size = len(self.arr)
-        middle_idx = size // 2
-        if size % 2 == 0:
-            median = (self.arr[middle_idx] + self.arr[middle_idx-1]) / 2
-            return median
+        if len(self.max_heap) > len(self.min_heap):
+            return -self.max_heap[0]
+        elif len(self.max_heap) < len(self.min_heap):
+            return self.min_heap[0]
         else:
-            return self.arr[middle_idx]
+            median = (-self.max_heap[0] + self.min_heap[0]) / 2
+            return median
 
 
 # Your MedianFinder object will be instantiated and called as such:
