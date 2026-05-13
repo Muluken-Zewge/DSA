@@ -14,9 +14,12 @@ class Solution:
                 return
             max_diff = max(abs(node.val - curr_min), abs(node.val - curr_max))
             ans = max(ans, max_diff)
+
+            new_min = min(node.val,curr_min)
+            new_max = max(node.val,curr_max)
             
-            dfs(node.left,min(node.val,curr_min),max(node.val,curr_max))
-            dfs(node.right,min(node.val,curr_min),max(node.val,curr_max))
+            dfs(node.left, new_min, new_max)
+            dfs(node.right, new_min, new_max)
         
         dfs(root, root.val, root.val)
 
