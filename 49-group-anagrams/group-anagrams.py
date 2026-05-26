@@ -7,7 +7,4 @@ class Solution:
             sorted_s = str(sorted(s))
             anagrams[sorted_s].append(s)
         
-        for key in anagrams:
-            ans.append(anagrams[key])
-        
-        return ans
+        return list(anagrams.values())
