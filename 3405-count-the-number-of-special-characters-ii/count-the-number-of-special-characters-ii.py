@@ -1,19 +1,20 @@
 class Solution:
     def numberOfSpecialChars(self, word: str) -> int:
-        lower_cnt = defaultdict(int)
-        seen_upper = set()
-        special = 0
-        for c in word:
-            if c.islower():
-                lower_cnt[c] += 1
+        # last occurance of lowercase c should be before first occurance of uppercase c
+        last_lower = {}
+        first_upper = {}
 
-        for c in word:
-            if c.islower() and c not in seen_upper:
-                lower_cnt[c] -= 1
+        for i,c in enumerate(word):
+            if c.islower():
+                last_lower[c] = i
             else:
-                l = c.lower()
-                if l in lower_cnt and lower_cnt[l] == 0 and c not in seen_upper:
-                    special += 1
-                seen_upper.add(c)
+                lower = c.lower()
+                if lower not in first_upper:
+                    first_upper[lower] = i
         
-        return special
+        ans = 0
+        for c in last_lower:
+            if c in first_upper and last_lower[c] < first_upper[c]:
+                ans += 1
+        
+        return ans
