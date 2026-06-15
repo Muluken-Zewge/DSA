@@ -5,23 +5,16 @@
 #         self.next = next
 class Solution:
     def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        # find the length of the linked list
-        length = 0
-        node = head
-        while node:
-            length += 1
-            node = node.next
-        if length == 1:
+        if not head or not head.next:
             return None
-        
-        mid = length // 2
-        count = -1
-        curr = head
-        while curr:
-            count += 1
-            if count + 1 == mid:
-                curr.next = curr.next.next
-                break
-            curr = curr.next
-        
+
+        pre_slow = None
+        slow = fast = head
+
+        while fast and fast.next:
+            pre_slow = slow
+            slow = slow.next
+            fast = fast.next.next
+        pre_slow.next = slow.next
+    
         return head
