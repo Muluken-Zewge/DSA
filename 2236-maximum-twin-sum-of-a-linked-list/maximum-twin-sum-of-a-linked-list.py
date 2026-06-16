@@ -7,12 +7,10 @@ class Solution:
     def pairSum(self, head: Optional[ListNode]) -> int:
         # step 1. use two pointer approach to cut the list into half
         slow = fast = head
-        pre_slow = None
         while fast and fast.next:
             pre_slow = slow
             slow = slow.next
             fast = fast.next.next
-        pre_slow.next = None
 
         # step 2. reverse the second part of the list
         prev = None
@@ -27,7 +25,7 @@ class Solution:
         l = head
         r = prev # head of the reversed list
         max_sum = 0
-        while l and r:
+        while r:
             max_sum = max(max_sum,l.val + r.val)
             l = l.next
             r = r.next
