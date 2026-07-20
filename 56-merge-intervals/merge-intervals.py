@@ -1,13 +1,19 @@
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        if len(intervals) <= 1:
+            return intervals
+
         intervals.sort()
-        merged = []
-        
-        for start,end in intervals:
-            # no overlap
-            if not merged or start > merged[-1][1]:
-                merged.append([start,end])
-            else: # overlap
-                merged[-1][1] = max(merged[-1][1],end)
-        
-        return merged
+        prev_s, prev_e = intervals[0][0], intervals[0][1]
+        ans = []
+
+        for curr_s,curr_e in intervals[1:]:
+            if curr_s <= prev_e:
+                prev_e = max(prev_e,curr_e)
+            else:
+                ans.append([prev_s,prev_e])
+                prev_s = curr_s
+                prev_e = curr_e
+        ans.append([prev_s,prev_e])
+
+        return ans
