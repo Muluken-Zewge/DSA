@@ -12,9 +12,7 @@ class Solution:
             
             for i in range(index,len(candidates)):
                 combination.append(candidates[i])
-                curr_sum += candidates[i]
-                backtrack(i,curr_sum)
-                curr_sum -= combination[-1]
+                backtrack(i,curr_sum + candidates[i])
                 combination.pop()
         
         backtrack(0,0)
