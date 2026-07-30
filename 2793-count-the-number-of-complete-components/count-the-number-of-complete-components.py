@@ -30,7 +30,6 @@ class Solution:
         #             ans += 1
         
         # return ans
-        print(graph)
         ans = 0
         for i in range(n):
             if i in visited:
