@@ -16,7 +16,6 @@ class Solution:
             left = dfs(node.left,curr[:])
             right = dfs(node.right,curr[:])
             if left == 0 and right == 0:
-                print(curr)
                 if sum(curr) == targetSum:
                     ans.append(curr)
             return 1
