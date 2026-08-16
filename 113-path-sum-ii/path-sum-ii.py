@@ -11,14 +11,14 @@ class Solution:
 
         def dfs(node,curr):
             if not node:
-                return 0
+                return
             curr.append(node.val)
-            left = dfs(node.left,curr[:])
-            right = dfs(node.right,curr[:])
-            if left == 0 and right == 0:
+            
+            if node.left is None and node.right is None:
                 if sum(curr) == targetSum:
                     ans.append(curr)
-            return 1
+            dfs(node.left,curr[:])
+            dfs(node.right,curr[:])
         
         dfs(root,curr)
         return ans
