@@ -5,29 +5,27 @@
 #         self.next = next
 class Solution:
     def nodesBetweenCriticalPoints(self, head: Optional[ListNode]) -> List[int]:
-        before = head
+        prev = head
         curr = head.next
-        after = head.next.next
-
         min_dist = float("inf")
-        first = last = latest =  None
-        index = 0
+        first_cp = prev_cp = None
+        i = 1
 
-        while after:
-            index += 1
-            if (before.val > curr.val and after.val > curr.val) or (curr.val > before.val and curr.val > after.val):
-                if first is None:
-                    first = index
+        while curr.next:
+            if (curr.val < prev.val and curr.val < curr.next.val) or (curr.val > prev.val and curr.val > curr.next.val):
+                if first_cp is None:
+                    first_cp = i
                 else:
-                    min_dist = min(min_dist,index - latest)
-                    last = index
-                latest = index
-            before = before.next
-            curr = curr.next
-            after = after.next
+                    min_dist = min(min_dist, i - prev_cp)
+                
+                prev_cp = i
 
-        if first is None or last is None:
+            i += 1
+            prev = curr
+            curr = curr.next
+        
+        if first_cp is None or first_cp == prev_cp:
             return [-1,-1]
-        max_dist = last - first
+        max_dist = prev_cp - first_cp
 
         return [min_dist,max_dist]
